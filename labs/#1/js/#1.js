@@ -18,7 +18,6 @@ function addBase(obj, x, y, z) {
 function addPipe(obj, x, y, z) {
   'use strict';
 
-
   geometry = new THREE.CylinderGeometry(2, 2, 20, 32);
   mesh = new THREE.Mesh(geometry, material);
   mesh.position.set(x, y, z);
@@ -27,7 +26,8 @@ function addPipe(obj, x, y, z) {
 
 function addShade(obj, x, y, z) {
   'use strict';
-   geometry = new THREE.CylinderGeometry(10, 5, 20, 32);
+
+   geometry = new THREE.CylinderGeometry(5, 10, 20, 32);
    mesh = new THREE.Mesh(geometry, material);
    mesh.position.set(x, y, z);
    obj.add(mesh);
@@ -49,10 +49,11 @@ function createLamp(x, y, z) {
 
   material = new THREE.MeshBasicMaterial({color: 0xff0000, wireframe: true});
 
-  addPipe(lamp, x, y, z);
-  addBase(lamp, x, y, z);
   addShade(lamp, x, y, z);
   addLight(lamp, x, y, z);
+  addPipe(lamp, x, y, z);
+  addBase(lamp, x, y, z);
+
 
   scene.add(lamp);
   lamp.position.set(x, y, z);
