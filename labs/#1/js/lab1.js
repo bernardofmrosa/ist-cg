@@ -6,59 +6,56 @@ var geometry, material, mesh;
 
 //var ball;
 
-var table,ground;
+var ground;
 
+var table;
 
-
-var base, pipe, shade, light;
-
-var cube;
+var base, pipe, light, shade;
 
 function addBase(obj, x, y, z) {
   'use strict';
 
   geometry = new THREE.ConeGeometry(5, 2.5, 32);
-  mesh = new THREE.Mesh(geometry, material);
-  mesh.position.set(x, y, z);
-  obj.add(mesh);
+  material = new THREE.MeshBasicMaterial({color: 0x000000});
+  base = new THREE.Mesh(geometry, material);
+  base.position.set(x, y, z);
+  obj.add(base);
 }
 
 function addPipe(obj, x, y, z) {
   'use strict';
 
-  geometry = new THREE.CylinderGeometry(0.5, 0.5, 40, 32);
-  mesh = new THREE.Mesh(geometry, material);
-  mesh.position.set(x, y, z);
-  obj.add(mesh);
+  geometry = new THREE.CylinderGeometry(1, 1, 40, 32);
+  material = new THREE.MeshBasicMaterial({color: 0x000000});
+  pipe = new THREE.Mesh(geometry, material);
+  pipe.position.set(x, y, z);
+  obj.add(pipe);
 }
 
 function addShade(obj, x, y, z) {
   'use strict';
 
    geometry = new THREE.CylinderGeometry(5, 10, 20, 32);
-   mesh = new THREE.Mesh(geometry, material);
-   mesh.position.set(x, y, z);
-   mesh.rotateZ(Math.PI / 4);
-
-
-   obj.add(mesh);
+   material = new THREE.MeshBasicMaterial({color: 0xffffff});
+   shade = new THREE.Mesh(geometry, material);
+   shade.position.set(x, y, z);
+   obj.add(shade);
 }
 
 function addLight(obj, x, y, z) {
   'use strict';
 
   geometry = new THREE.SphereGeometry(2.5, 32, 32);
-  mesh = new THREE.Mesh(geometry, material);
-  mesh.position.set(x, y, z);
-  obj.add(mesh);
+  material = new THREE.MeshBasicMaterial({color: 0xffff00});
+  light = new THREE.Mesh(geometry, material);
+  light.position.set(x, y, z);
+  obj.add(light);
 }
 
 function createLamp(x, y, z) {
   'use strict';
 
   var lamp = new THREE.Object3D();
-
-  material = new THREE.MeshBasicMaterial({color: 0xff0000, wireframe: true});
 
   addShade(lamp, x, y + 30, z);
   addLight(lamp, x, y + 30, z);
@@ -67,11 +64,7 @@ function createLamp(x, y, z) {
 
   scene.add(lamp);
   lamp.position.set(-25,21.25,0);
-
-
 }
-
-
 
 function addTableLeg(obj, x, y, z) {
     'use strict';
@@ -106,7 +99,6 @@ function addTableTop(obj, x, y, z) {
 
     scene.add(ball);
 }*/
-
 
 function createTable(x, y, z) {
     'use strict';
@@ -151,11 +143,6 @@ function createScene() {
     scene = new THREE.Scene();
     scene.userData = {perspective : "top"};
     scene.add(new THREE.AxisHelper(100));
-
-    geometry = new THREE.CubeGeometry(3, 3, 3);
-    cube = new THREE.Mesh(geometry, material);
-    cube.position.set(0,1.5,0);
-    scene.add(cube);
 
     createGround(0,-1,0);
     createTable(0, 0, 0);
@@ -265,7 +252,6 @@ function onKeyDown(e) {
         break;
     }
 }
-
 
 function onKeyPress(e) {
     'use strict';

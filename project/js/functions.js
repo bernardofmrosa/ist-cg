@@ -5,7 +5,8 @@ function onKeyDown(e) {
     switch (e.keyCode) {
         case 65: //A
         case 97: //a
-            scene.traverse(function(node) {
+            console.log("A");
+            app.scene.traverse(function(node) {
                 if (node instanceof THREE.Mesh) {
                     node.material.wireframe = !node.material.wireframe;
                 }
@@ -14,7 +15,7 @@ function onKeyDown(e) {
 
         case 69: //E
         case 101: //e
-            scene.traverse(function (node) {
+            app.scene.traverse(function (node) {
                 if (node instanceof THREE.AxesHelper) {
                     node.visible = !node.visible;
                 }
@@ -22,66 +23,56 @@ function onKeyDown(e) {
             break;
 
         case 49: //1
-            if (perspective != "top") {
-                activateTopCamera();
+            if (app.perspective != "top") {
+                app.activateTopCamera();
             }
             break;
         case 50: //2
-            if (perspective != "front") {
-                activateFrontCamera();
+            if (app.perspective != "front") {
+                app.activateFrontCamera();
             }
             break;
         case 51: //3
-            if (perspective != "side") {
-                activateSideCamera();
+            if (app.perspective != "side") {
+                app.activateSideCamera();
             }
+            break;
+
+        case 37: //left
+            app.chair.userData.moveKeys.left = true;
+            
+            break;
+        case 39: //right
+            app.chair.userData.moveKeys.right = true;
+            break;
+
+        case 38: //up
+            app.chair.userData.moveKeys.up = true;
+            break;
+        case 40: //down
+            app.chair.userData.moveKeys.down = true;
             break;
     }
 }
 
-function onKeyPress(e) {
+function onKeyUp(e) {
     'use strict';
-    var mov = 2;
-    switch (e.keyCode) {
-        case 37: //left
-            if (perspective == "front") {
-                table.translateX(-mov);
-            } else if (perspective == "top") {
-                table.translateX(-mov);
-            } else {
-                table.translateZ(mov);
-            }
 
-            break;
-
-        case 38: //up
-            if (perspective == "front") {
-                table.translateZ(-mov);
-            } else if (perspective == "top") {
-                table.translateZ(-mov);
-            } else {
-                table.translateX(-mov);
-            }
-            break;
-
-        case 39: //right
-            if (perspective == "front") {
-                table.translateX(mov);
-            } else if (perspective == "top") {
-                table.translateX(mov);
-            } else {
-                table.translateZ(-mov);
-            }
-            break;
-
-        case 40: //down
-            if (perspective == "front") {
-                table.translateZ(mov);
-            } else if (perspective == "top") {
-                table.translateZ(mov);
-            } else {
-                table.translateX(mov);
-            }
-            break;
+    switch(e.keyCode) {
+    
+    case 37: //left
+        app.chair.userData.moveKeys.left = false;
+        //app.chair.userData.speed.x = 0;
+        break;
+    case 39: //right
+        app.chair.userData.moveKeys.right = false;
+        //app.chair.userData.speed.x = 0;
+        break;
+    case 38: //up
+        app.chair.userData.moveKeys.up = false;
+        break;
+    case 40: //down
+        app.chair.userData.moveKeys.down = false;
+        break;
     }
 }

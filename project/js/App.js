@@ -1,10 +1,15 @@
-class App{
+class App {
     constructor() {
         'use strict';
         this.scene;
         this.camera;
         this.perspective;
         this.renderer;
+
+        this.table;
+        this.chair;
+
+        this.clock;
     }
 
     getScene(){
@@ -81,6 +86,8 @@ class App{
         this.getScene().add(table);
 
         table.setPosition(x, y, z);
+
+        return table;
     }
 
     createChair(x, y, z) {
@@ -91,6 +98,7 @@ class App{
             new THREE.MeshBasicMaterial({color: 0xffc126}),
             new THREE.MeshBasicMaterial({color: 0xff4800})]);
 
+        /*
         chair.addChairWheel(4, -9.5, 0);
         chair.addChairWheel(-4, -9.5, 0);
 
@@ -107,9 +115,12 @@ class App{
         chair.addChairBase( 0, 0, 0);
         chair.addChairBack( 0, 6, 5);
 
+        */
+        chair.setPosition(x, y, z);
+
         this.getScene().add(chair);
 
-        chair.setPosition(x, y, z);
+        return chair;
     }
 
 
@@ -121,17 +132,18 @@ class App{
 
         this.activateTopCamera();
         ///////////////////////////////////
-        //this.createGround(0, -1, 0);
-        //this.createTable(0, 5, 0);
-        //this.createChair(0, 11, 20);
-        var floorLamp = new FloorLamp(10,10,0);
-        scene.add(floorLamp);
-        floorLamp.remove();
-
+        this.createGround(0, -1, 0);
+        this.table = this.createTable(0, 5, 0);
+        this.chair = this.createChair(0, 11, 20);
         ///////////////////////////////////
 
-
-
+        var floorLamp = new FloorLamp(0,0,0);
+        floorLamp.addBase();
+        floorLamp.addPipe();
+        floorLamp.addLightSupport();
+        floorLamp.addLight();
+        floorLamp.addShade();
+        scene.add(floorLamp);
     }
 
     activateTopCamera() {
@@ -170,7 +182,7 @@ class App{
         camera.position.y = 0;
         camera.position.z = 50;
         this.setPerspective("front");
-        camera.lookAt(scene.position);
+        camera.lookAt(this.scene.position);
         this.setCamera(camera);
     }
 
@@ -182,7 +194,7 @@ class App{
         camera.position.y = 0;
         camera.position.z = 0;
         this.setPerspective("side");
-        camera.lookAt(scene.position);
+        camera.lookAt(this.scene.position);
         this.setCamera(camera);
     }
 
@@ -199,25 +211,19 @@ class App{
         document.body.appendChild(this.getRenderer().domElement);
     }
 
-    /*animate(app) {
-        'use strict';
-        console.log(this);
 
-        this.render();
-
-        requestAnimationFrame(this.animate(app));
-    }*/
     animate() {
         'use strict';
-        console.log(this);
-        /*if (ball.userData.jumping) {
-            ball.userData.step += 0.04;
-            ball.position.y = Math.abs(30 * (Math.sin(ball.userData.step)));
-            ball.position.z = 15 * (Math.cos(ball.userData.step));
-        }*/
+
+        var deltaTime = 0;
+        if(this.clock.running) deltaTime = this.clock.getDelta();
+        //console.log(deltaTime);
+
+        this.chair.update(deltaTime);
+
         this.render();
 
-        requestAnimationFrame(this.animate); //requestAnimationFrame(this.animate()); *rebenta o stack*
+        requestAnimationFrame(this.animate.bind(this));
     }
 
     onResize() {
@@ -234,14 +240,18 @@ class App{
 
     init() {
         'use strict';
+
+        this.clock = new THREE.Clock;
+        this.clock.start();
+
         this.createRenderer();
         this.createScene();
 
         this.render();
 
-        window.addEventListener("keypress", onKeyPress);
         window.addEventListener("keydown", onKeyDown);
-        window.addEventListener("resize", this.onResize);
+        window.addEventListener("keyup",onKeyUp);
+        window.addEventListener("resize", this.onResize.bind(this));
     }
 
 }
