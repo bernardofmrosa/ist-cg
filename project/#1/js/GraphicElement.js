@@ -1,8 +1,6 @@
 class GraphicElement extends THREE.Object3D {
-
     constructor(x,y,z){
         'use strict';
-
         super();
         this.setPosition(x,y,z)
     }

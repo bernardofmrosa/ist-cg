@@ -23,34 +23,32 @@ function onKeyDown(e) {
             break;
 
         case 49: //1
-            if (app.perspective != "top") {
-                app.activateTopCamera();
-            }
+            app.setPerspective("top");
             break;
         case 50: //2
-            if (app.perspective != "front") {
-                app.activateFrontCamera();
-            }
+            app.setPerspective("front");
             break;
         case 51: //3
-            if (app.perspective != "side") {
-                app.activateSideCamera();
-            }
+            app.setPerspective("side");
+            break;
+        
+        case 52: //4
+            app.setPerspective("new");
             break;
 
         case 37: //left
-            app.chair.userData.moveKeys.left = true;
-            
+            app.scene.chair.userData.moveKeys.left = true;
             break;
+            
         case 39: //right
-            app.chair.userData.moveKeys.right = true;
+            app.scene.chair.userData.moveKeys.right = true;
             break;
 
         case 38: //up
-            app.chair.userData.moveKeys.up = true;
+            app.scene.chair.userData.moveKeys.up = true;
             break;
         case 40: //down
-            app.chair.userData.moveKeys.down = true;
+            app.scene.chair.userData.moveKeys.down = true;
             break;
     }
 }
@@ -61,18 +59,18 @@ function onKeyUp(e) {
     switch(e.keyCode) {
     
     case 37: //left
-        app.chair.userData.moveKeys.left = false;
+        app.scene.chair.userData.moveKeys.left = false;
         //app.chair.userData.speed.x = 0;
         break;
     case 39: //right
-        app.chair.userData.moveKeys.right = false;
+        app.scene.chair.userData.moveKeys.right = false;
         //app.chair.userData.speed.x = 0;
         break;
     case 38: //up
-        app.chair.userData.moveKeys.up = false;
+        app.scene.chair.userData.moveKeys.up = false;
         break;
     case 40: //down
-        app.chair.userData.moveKeys.down = false;
+        app.scene.chair.userData.moveKeys.down = false;
         break;
     }
 }

@@ -3,7 +3,7 @@ class Table extends GraphicElement{
         'use strict';
         super();
         this.legMaterial = materials[0];
-        this.tableTopMaterial = materials[1];
+        this.tableTopMaterial = materials[0];
     }
 
     getLegMaterial(){
@@ -29,7 +29,7 @@ class Table extends GraphicElement{
 
     addTableLeg(x, y, z) {
         'use strict';
-        var geometry = new THREE.CylinderGeometry(2, 2, 21, 10, 10);
+        var geometry = new THREE.CylinderGeometry(1.5, 1.5, 20, 10, 10);
         var mesh = new THREE.Mesh(geometry, this.getLegMaterial());
         mesh.position.set(x, y, z);
 
@@ -43,7 +43,7 @@ class Table extends GraphicElement{
 
     addTableTop(x, y, z) {
         'use strict';
-        var geometry = new THREE.CubeGeometry(70, 4, 40);
+        var geometry = new THREE.CubeGeometry(60, 4, 40);
         var mesh = new THREE.Mesh(geometry, this.getTableTopMaterial());
         mesh.position.set(x, y, z);
         this.add(mesh);
